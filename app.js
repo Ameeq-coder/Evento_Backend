@@ -25,6 +25,12 @@ app.get('/',(req,res) =>{
 const PORT=process.env.APP_PORT||4000
 
 
-app.listen(PORT,()=>{
-console.log('Server is running sucessfuly',PORT)
-});
+if (require.main === module) {
+   const PORT = process.env.APP_PORT || 4000;
+   app.listen(PORT, () => {
+     console.log(`Server is running successfully on port ${PORT}`);
+   });
+ }
+
+
+module.exports = app;
