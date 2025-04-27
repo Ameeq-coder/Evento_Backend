@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config({ path: `${process.cwd()}/.env` });
+const pg = require('pg'); // Explicitly require pg
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('./config');
@@ -7,19 +8,22 @@ const config = require('./config');
 let sequelize;
 
 if (process.env.DATABASE_URL) {
-  // ✅ If DATABASE_URL is available (like on Vercel or Neon)
+  // For Vercel or Neon
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
+    dialectModule: pg, // Add this line to explicitly use pg
     dialectOptions: {
       ssl: {
         require: true, 
-        rejectUnauthorized: false, // Accept self-signed SSL certs (Neon needs this)
+        rejectUnauthorized: false,
       },
     },
   });
 } else {
-  // ✅ Local connection (localhost database)
-  sequelize = new Sequelize(config[env]);
+  // Local connection
+  sequelize = new Sequelize(config[env], {
+    dialectModule: pg // Add this line here too
+  });
 }
 
 module.exports = sequelize;
