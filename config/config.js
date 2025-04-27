@@ -18,7 +18,7 @@ module.exports = {
     dialect: 'postgres',
   },
   production: {
-    use_env_variable: process.env.DATABASE_URL, // Important! Use Neon URL
+    use_env_variable: 'postgresql://neondb_owner:npg_F1wkKU5sjDvm@ep-young-band-a4n62bnw-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require', // Important! Use Neon URL
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
