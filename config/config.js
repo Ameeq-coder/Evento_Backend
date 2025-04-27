@@ -1,32 +1,30 @@
+require('dotenv').config({ path: `${process.cwd()}/.env` });
 
-
-require('dotenv').config({path: `${process.cwd()}/.env`}); 
-
-
-
-module.exports={
-  "development": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_NAME,
-    "port":process.env.DB_PORT,
-    "host": process.env.DB_HOST,
-    "dialect": 'postgres'
+module.exports = {
+  development: {
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+    host: process.env.DB_HOST,
+    dialect: 'postgres',
   },
-  "test": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_NAME,
-    "port":process.env.DB_PORT,
-    "host": process.env.DB_HOST,
-    "dialect": "mysql"
+  test: {
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+    host: process.env.DB_HOST,
+    dialect: 'postgres',
   },
-  "production": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_NAME,
-    "port":process.env.DB_PORT,
-    "host": process.env.DB_HOST,
-    "dialect": "mysql"
-  }
-}
+  production: {
+    use_env_variable: process.env.DATABASE_URL, // Important! Use Neon URL
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false, // Important for Neon SSL
+      },
+    },
+  },
+};
