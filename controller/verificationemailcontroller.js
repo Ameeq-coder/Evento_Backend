@@ -12,6 +12,10 @@ const sendVerificationEmail = async (req, res) => {
     try {
         const { email } = req.body;
 
+
+
+        
+
         const user = await Users.findOne({ where: { email } });
         if (!user) {
             return res.status(404).json({ message: "User not found with this email" });
